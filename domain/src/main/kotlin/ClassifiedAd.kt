@@ -1,8 +1,9 @@
 package marketplace.domain
 
+import marketplace.framework.Entity
 import java.math.BigDecimal
 
-class ClassifiedAd(val id: ClassifiedAdId, val ownerId: UserId) {
+class ClassifiedAd(val id: ClassifiedAdId, val ownerId: UserId) : Entity() {
     var title: ClassifiedAdTitle? = null
         private set
 
@@ -20,26 +21,31 @@ class ClassifiedAd(val id: ClassifiedAdId, val ownerId: UserId) {
 
     init {
         ensureValidState()
+        raise(Events.ClassifiedAdCreated(id.value, ownerId.value))
     }
 
     fun setTitle(title: ClassifiedAdTitle) {
         this.title = title
         ensureValidState()
+        raise(Events.ClassifiedAdTitleChanged(id.value, title.value))
     }
 
     fun updateText(text: ClassifiedAdText) {
         this.text = text
         ensureValidState()
+        raise(Events.ClassifiedAdTextUpdated(id.value, text.value))
     }
 
     fun updatePrice(price: Price) {
         this.price = price
         ensureValidState()
+        raise(Events.ClassifiedAdPriceUpdated(id.value, price.money.amount, price.money.currency.currencyCode))
     }
 
     fun requestToPublish() {
         state = ClassifiedAdState.PENDING_REVIEW
         ensureValidState()
+        raise(Events.ClassifiedAdSentForReview(id.value))
     }
 
     protected fun ensureValidState() {

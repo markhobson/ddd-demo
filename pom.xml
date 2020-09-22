@@ -77,6 +77,12 @@
 			</dependency>
 
 			<dependency>
+				<groupId>demo</groupId>
+				<artifactId>marketplace-framework</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter</artifactId>
 				<version>5.7.0</version>
