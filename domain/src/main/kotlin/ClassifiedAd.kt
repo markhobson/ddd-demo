@@ -1,23 +1,24 @@
 package marketplace.domain
 
-import java.math.BigDecimal
-
 class ClassifiedAd(val id: ClassifiedAdId, val ownerId: UserId) {
-    private var title: String? = null
+    var title: ClassifiedAdTitle? = null
+        private set
 
-    private var text: String? = null
+    var text: ClassifiedAdText? = null
+        private set
 
-    private var price: BigDecimal? = null
+    var price: Price? = null
+        private set
 
-    fun setTitle(title: String) {
+    fun setTitle(title: ClassifiedAdTitle) {
         this.title = title
     }
 
-    fun updateText(text: String) {
+    fun updateText(text: ClassifiedAdText) {
         this.text = text
     }
 
-    fun updatePrice(price: BigDecimal) {
+    fun updatePrice(price: Price) {
         this.price = price
     }
 }
