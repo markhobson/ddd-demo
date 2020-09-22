@@ -89,6 +89,7 @@
 
 	<modules>
 		<module>domain</module>
+		<module>framework</module>
 		<module>web</module>
 	</modules>
 
