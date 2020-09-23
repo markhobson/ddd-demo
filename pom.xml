@@ -104,6 +104,12 @@
 
 			<dependency>
 				<groupId>demo</groupId>
+				<artifactId>marketplace-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>demo</groupId>
 				<artifactId>marketplace-framework</artifactId>
 				<version>${project.version}</version>
 			</dependency>
