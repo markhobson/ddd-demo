@@ -1,7 +1,6 @@
 package marketplace.domain
 
-// Data class constructor cannot be private
-data class ClassifiedAdText(val value: String) {
+data class ClassifiedAdText internal constructor(val value: String) {
     companion object {
         fun fromString(text: String): ClassifiedAdText = ClassifiedAdText(text)
     }

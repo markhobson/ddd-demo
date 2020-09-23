@@ -16,7 +16,7 @@ class ClassifiedAdPublishSpec {
     fun `can publish a valid ad`() {
         classifiedAd.setTitle(ClassifiedAdTitle.fromString("Test ad"))
         classifiedAd.updateText(ClassifiedAdText.fromString("Please buy my stuff"))
-        classifiedAd.updatePrice(Price(Money.fromDouble(100.10, "EUR", FakeCurrencyLookup())))
+        classifiedAd.updatePrice(Price.fromDouble(100.10, "EUR", FakeCurrencyLookup()))
         classifiedAd.requestToPublish()
 
         assertEquals(ClassifiedAdState.PENDING_REVIEW, classifiedAd.state)
@@ -25,7 +25,7 @@ class ClassifiedAdPublishSpec {
     @Test
     fun `cannot publish without title`() {
         classifiedAd.updateText(ClassifiedAdText.fromString("Please buy my stuff"))
-        classifiedAd.updatePrice(Price(Money.fromDouble(100.10, "EUR", FakeCurrencyLookup())))
+        classifiedAd.updatePrice(Price.fromDouble(100.10, "EUR", FakeCurrencyLookup()))
 
         assertThrows(InvalidEntityStateException::class.java) {
             classifiedAd.requestToPublish()
@@ -35,7 +35,7 @@ class ClassifiedAdPublishSpec {
     @Test
     fun `cannot publish without text`() {
         classifiedAd.setTitle(ClassifiedAdTitle.fromString("Test ad"))
-        classifiedAd.updatePrice(Price(Money.fromDouble(100.10, "EUR", FakeCurrencyLookup())))
+        classifiedAd.updatePrice(Price.fromDouble(100.10, "EUR", FakeCurrencyLookup()))
 
         assertThrows(InvalidEntityStateException::class.java) {
             classifiedAd.requestToPublish()
@@ -56,7 +56,7 @@ class ClassifiedAdPublishSpec {
     fun `cannot publish with zero price`() {
         classifiedAd.setTitle(ClassifiedAdTitle.fromString("Test ad"))
         classifiedAd.updateText(ClassifiedAdText.fromString("Please buy my stuff"))
-        classifiedAd.updatePrice(Price(Money.fromDouble(0.0, "EUR", FakeCurrencyLookup())))
+        classifiedAd.updatePrice(Price.fromDouble(0.0, "EUR", FakeCurrencyLookup()))
 
         assertThrows(InvalidEntityStateException::class.java) {
             classifiedAd.requestToPublish()

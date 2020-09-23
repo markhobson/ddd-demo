@@ -4,15 +4,20 @@ import java.lang.Exception
 import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 
-data class Money(val amount: BigDecimal, val currency: CurrencyDetails) {
-    init {
+data class Money internal constructor(val amount: BigDecimal, val currency: CurrencyDetails) {
+    internal constructor(amount: BigDecimal, currencyCode: String, currencyLookup: CurrencyLookup)
+        : this(amount, currencyLookup.findCurrency(currencyCode)) {
+        if (currencyCode.isEmpty()) {
+            throw IllegalArgumentException("Currency code must be specified")
+        }
+
         if (amount.scale() > currency.decimalPlaces) {
-            throw IllegalArgumentException("Amount in ${currency.currencyCode} cannot have more than "
-                + "${currency.decimalPlaces} decimals")
+            throw IllegalArgumentException("Amount in $currencyCode cannot have more than ${currency.decimalPlaces} "
+                + "decimals")
         }
 
         if (!currency.inUse) {
-            throw IllegalArgumentException("Currency ${currency.currencyCode} is not valid")
+            throw IllegalArgumentException("Currency $currencyCode is not valid")
         }
     }
 
@@ -38,20 +43,10 @@ data class Money(val amount: BigDecimal, val currency: CurrencyDetails) {
         private const val DEFAULT_CURRENCY = "EUR"
 
         fun fromDouble(amount: Double, currency: String = DEFAULT_CURRENCY, currencyLookup: CurrencyLookup)
-            = from(BigDecimal.valueOf(amount), currency, currencyLookup)
+            = Money(BigDecimal.valueOf(amount), currency, currencyLookup)
 
         fun fromString(amount: String, currency: String = DEFAULT_CURRENCY, currencyLookup: CurrencyLookup)
-            = from(BigDecimal(amount), currency, currencyLookup)
-
-        private fun from(amount: BigDecimal, currencyCode: String, currencyLookup: CurrencyLookup): Money {
-            if (currencyCode.isEmpty()) {
-                throw IllegalArgumentException("Currency code must be specified")
-            }
-
-            val currency = currencyLookup.findCurrency(currencyCode)
-
-            return Money(amount, currency)
-        }
+            = Money(BigDecimal(amount), currency, currencyLookup)
     }
 }
 
