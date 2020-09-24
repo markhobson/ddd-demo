@@ -1,12 +1,9 @@
 package marketplace.domain
 
-import marketplace.framework.Entity
+import marketplace.framework.AggregateRoot
 import java.math.BigDecimal
 
-class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : Entity() {
-    var id = id
-        private set
-
+class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<ClassifiedAdId>(id) {
     var ownerId = ownerId
         private set
 
