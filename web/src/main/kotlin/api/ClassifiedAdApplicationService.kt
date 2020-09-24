@@ -18,24 +18,24 @@ import java.util.UUID
 @Component
 class ClassifiedAdApplicationService(private val store: EntityStore, private val currencyLookup: CurrencyLookup)
     : ApplicationService {
-    override fun handle(command: Any) = when (command) {
-        is V1.Create -> handleCreate(command)
+    override fun handle(command: Any) {
+        when (command) {
+            is V1.Create -> handleCreate(command)
 
-        is V1.SetTitle -> handleUpdate(command.id) {
-            c -> c.setTitle(ClassifiedAdTitle.fromString(command.title))
+            is V1.SetTitle -> handleUpdate(command.id) {
+                c -> c.setTitle(ClassifiedAdTitle.fromString(command.title))
+            }
+
+            is V1.UpdateText -> handleUpdate(command.id) {
+                c -> c.updateText(ClassifiedAdText.fromString(command.text))
+            }
+
+            is V1.UpdatePrice -> handleUpdate(command.id) {
+                c -> c.updatePrice(Price.fromDouble(command.price, command.currency, currencyLookup))
+            }
+
+            is V1.RequestToPublish -> handleUpdate(command.id, ClassifiedAd::requestToPublish)
         }
-
-        is V1.UpdateText -> handleUpdate(command.id) {
-            c -> c.updateText(ClassifiedAdText.fromString(command.text))
-        }
-
-        is V1.UpdatePrice -> handleUpdate(command.id) {
-            c -> c.updatePrice(Price.fromDouble(command.price, command.currency, currencyLookup))
-        }
-
-        is V1.RequestToPublish -> handleUpdate(command.id, ClassifiedAd::requestToPublish)
-
-        else -> {}
     }
 
     private fun handleCreate(command: V1.Create) {
