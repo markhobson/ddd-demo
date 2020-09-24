@@ -1,22 +1,18 @@
 package marketplace.framework
 
-abstract class Entity {
-    private val events: MutableList<Any> = mutableListOf()
+abstract class Entity<T>(id: T, val applier: (Any) -> Unit) : InternalEventHandler {
+    var id = id
+        protected set
 
     protected fun apply(event: Any) {
         on(event)
-        ensureValidState()
-        events.add(event)
+        applier(event)
     }
 
     // Renamed from 'when' due to clash with Kotlin keyword
     protected abstract fun on(event: Any)
 
-    fun getChanges() = events.asIterable()
-
-    fun clearChanges() {
-        events.clear()
+    override fun handle(event: Any) {
+        on(event)
     }
-
-    protected abstract fun ensureValidState()
 }

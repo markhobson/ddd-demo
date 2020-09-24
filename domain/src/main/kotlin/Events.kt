@@ -13,4 +13,9 @@ class Events {
     data class ClassifiedAdPriceUpdated(val id: UUID, val price: BigDecimal, val currencyCode: String)
 
     data class ClassifiedAdSentForReview(val id: UUID)
+
+    data class PictureAddedToAClassifiedAd(val classifiedAdId: UUID, val pictureId: UUID, val url: String,
+        val height: Int, val width: Int, val order: Int)
+
+    data class ClassifiedAdPictureResized(val pictureId: UUID, val height: Int, val width: Int)
 }

@@ -1,7 +1,10 @@
 package marketplace.domain
 
 import marketplace.framework.AggregateRoot
+import java.lang.IllegalArgumentException
 import java.math.BigDecimal
+import java.net.URI
+import java.util.UUID
 
 class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<ClassifiedAdId>(id) {
     var ownerId = ownerId
@@ -21,6 +24,8 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
 
     var approvedBy: UserId? = null
         private set
+
+    private val pictures: MutableList<Picture> = mutableListOf()
 
     init {
         apply(Events.ClassifiedAdCreated(id.value, ownerId.value))
@@ -42,6 +47,29 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
         apply(Events.ClassifiedAdSentForReview(id.value))
     }
 
+    fun addPicture(pictureUri: URI, size: PictureSize) {
+        apply(Events.PictureAddedToAClassifiedAd(
+            classifiedAdId = id.value,
+            pictureId = UUID.randomUUID(),
+            url = pictureUri.toString(),
+            height = size.height,
+            width = size.width,
+            order = pictures.maxOf { picture -> picture.order } + 1
+        ))
+    }
+
+    fun resizePicture(pictureId: PictureId, newSize: PictureSize) {
+        val picture = findPicture(pictureId)
+            ?: throw IllegalArgumentException("Cannot resize a picture that I don't have")
+        picture.resize(newSize)
+    }
+
+    private fun findPicture(id: PictureId)
+        = pictures.find { picture -> picture.id == id }
+
+    private fun firstPicture()
+        = pictures.firstOrNull()
+
     override fun on(event: Any) {
         when (event) {
             is Events.ClassifiedAdCreated -> {
@@ -61,6 +89,11 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
             is Events.ClassifiedAdSentForReview -> {
                 state = ClassifiedAdState.PENDING_REVIEW
             }
+            is Events.PictureAddedToAClassifiedAd -> {
+                val newPicture = Picture(::apply)
+                applyToEntity(newPicture, event)
+                pictures.add(newPicture)
+            }
         }
     }
 
@@ -70,10 +103,12 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
                 title != null
                 && text != null
                 && price?.let { it.money.amount > BigDecimal.ZERO } ?: false
+                && firstPicture().hasCorrectSize()
             ClassifiedAdState.ACTIVE ->
                 title != null
                 && text != null
                 && price?.let { it.money.amount > BigDecimal.ZERO } ?: false
+                && firstPicture().hasCorrectSize()
                 && approvedBy != null
             else -> true
         }
