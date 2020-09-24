@@ -125,6 +125,15 @@
 
 	</dependencyManagement>
 
+	<dependencies>
+
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib-jdk8</artifactId>
+		</dependency>
+
+	</dependencies>
+
 	<modules>
 		<module>domain</module>
 		<module>framework</module>
