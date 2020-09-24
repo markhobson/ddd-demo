@@ -37,16 +37,17 @@ data class Money internal constructor(val amount: BigDecimal, val currency: Curr
         return Money(amount - subtrahend.amount, currency)
     }
 
-    override fun toString() = "${currency.currencyCode} $amount"
+    override fun toString() =
+        "${currency.currencyCode} $amount"
 
     companion object {
         private const val DEFAULT_CURRENCY = "EUR"
 
-        fun fromDouble(amount: Double, currency: String = DEFAULT_CURRENCY, currencyLookup: CurrencyLookup)
-            = Money(BigDecimal.valueOf(amount), currency, currencyLookup)
+        fun fromDouble(amount: Double, currency: String = DEFAULT_CURRENCY, currencyLookup: CurrencyLookup) =
+            Money(BigDecimal.valueOf(amount), currency, currencyLookup)
 
-        fun fromString(amount: String, currency: String = DEFAULT_CURRENCY, currencyLookup: CurrencyLookup)
-            = Money(BigDecimal(amount), currency, currencyLookup)
+        fun fromString(amount: String, currency: String = DEFAULT_CURRENCY, currencyLookup: CurrencyLookup) =
+            Money(BigDecimal(amount), currency, currencyLookup)
     }
 }
 

@@ -54,7 +54,7 @@ data class PictureSize internal constructor(val width: Int, val height: Int, val
     }
 
     companion object {
-        fun internal(width: Int, height: Int): PictureSize
-            = PictureSize(width, height, Unit)
+        fun internal(width: Int, height: Int): PictureSize =
+            PictureSize(width, height, Unit)
     }
 }

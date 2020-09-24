@@ -64,11 +64,11 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
         picture.resize(newSize)
     }
 
-    private fun findPicture(id: PictureId)
-        = pictures.find { picture -> picture.id == id }
+    private fun findPicture(id: PictureId) =
+        pictures.find { picture -> picture.id == id }
 
-    private fun firstPicture()
-        = pictures.firstOrNull()
+    private fun firstPicture() =
+        pictures.firstOrNull()
 
     override fun on(event: Any) {
         when (event) {

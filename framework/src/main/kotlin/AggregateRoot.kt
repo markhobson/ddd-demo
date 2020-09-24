@@ -15,7 +15,8 @@ abstract class AggregateRoot<T>(id: T) : InternalEventHandler {
     // Renamed from 'when' due to clash with Kotlin keyword
     protected abstract fun on(event: Any)
 
-    fun getChanges() = changes.asIterable()
+    fun getChanges() =
+        changes.asIterable()
 
     fun clearChanges() {
         changes.clear()

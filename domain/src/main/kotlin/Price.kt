@@ -18,7 +18,7 @@ data class Price private constructor(val money: Money) {
         : this(Money(amount, CurrencyDetails(currencyCode, 0, false)))
 
     companion object {
-        fun fromDouble(amount: Double, currency: String, currencyLookup: CurrencyLookup)
-            = Price(amount, currency, currencyLookup)
+        fun fromDouble(amount: Double, currency: String, currencyLookup: CurrencyLookup) =
+            Price(amount, currency, currencyLookup)
     }
 }
