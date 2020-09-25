@@ -43,18 +43,18 @@ class ClassifiedAdApplicationService(
     }
 
     private fun handleCreate(command: V1.Create) {
-        if (repository.existsById(ClassifiedAdId(command.id))) {
+        if (repository.exists(ClassifiedAdId(command.id))) {
             throw IllegalStateException("Entity with id ${command.id} already exists")
         }
 
         val classifiedAd = ClassifiedAd(ClassifiedAdId(command.id), UserId(command.ownerId))
 
-        repository.insert(classifiedAd)
+        repository.add(classifiedAd)
         unitOfWork.commit()
     }
 
     private fun handleUpdate(classifiedAdId: UUID, operation: (ClassifiedAd) -> Unit) {
-        val classifiedAd = repository.findById(ClassifiedAdId(classifiedAdId))
+        val classifiedAd = repository.load(ClassifiedAdId(classifiedAdId))
             ?: throw IllegalArgumentException("Entity with id $classifiedAdId cannot be found")
 
         operation(classifiedAd)
