@@ -2,8 +2,8 @@ package marketplace.web.classifiedAd
 
 import java.util.UUID
 
-class Contracts {
-    class V1 {
+object Contracts {
+    object V1 {
         data class Create(val id: UUID, val ownerId: UUID)
 
         data class SetTitle(val id: UUID, val title: String)

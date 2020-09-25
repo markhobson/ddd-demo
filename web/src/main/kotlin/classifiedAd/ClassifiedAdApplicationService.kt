@@ -10,7 +10,7 @@ import marketplace.domain.classifiedAd.Price
 import marketplace.domain.UserId
 import marketplace.framework.ApplicationService
 import marketplace.framework.UnitOfWork
-import marketplace.web.classifiedAd.Contracts.*
+import marketplace.web.classifiedAd.Contracts.V1
 import org.springframework.stereotype.Component
 import java.lang.IllegalArgumentException
 import java.lang.IllegalStateException
