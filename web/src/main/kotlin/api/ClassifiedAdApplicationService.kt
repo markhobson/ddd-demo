@@ -2,13 +2,14 @@ package marketplace.web.api
 
 import marketplace.domain.ClassifiedAd
 import marketplace.domain.ClassifiedAdId
+import marketplace.domain.ClassifiedAdRepository
 import marketplace.domain.ClassifiedAdText
 import marketplace.domain.ClassifiedAdTitle
 import marketplace.domain.CurrencyLookup
 import marketplace.domain.Price
 import marketplace.domain.UserId
 import marketplace.framework.ApplicationService
-import marketplace.framework.EntityStore
+import marketplace.framework.UnitOfWork
 import marketplace.web.contracts.ClassifiedAds.*
 import org.springframework.stereotype.Component
 import java.lang.IllegalArgumentException
@@ -16,8 +17,11 @@ import java.lang.IllegalStateException
 import java.util.UUID
 
 @Component
-class ClassifiedAdApplicationService(private val store: EntityStore, private val currencyLookup: CurrencyLookup)
-    : ApplicationService {
+class ClassifiedAdApplicationService(
+    private val repository: ClassifiedAdRepository,
+    private val unitOfWork: UnitOfWork,
+    private val currencyLookup: CurrencyLookup
+) : ApplicationService {
     override fun handle(command: Any) {
         when (command) {
             is V1.Create -> handleCreate(command)
@@ -39,21 +43,23 @@ class ClassifiedAdApplicationService(private val store: EntityStore, private val
     }
 
     private fun handleCreate(command: V1.Create) {
-        if (store.exists<ClassifiedAd>(command.id.toString())) {
+        if (repository.existsById(ClassifiedAdId(command.id))) {
             throw IllegalStateException("Entity with id ${command.id} already exists")
         }
 
         val classifiedAd = ClassifiedAd(ClassifiedAdId(command.id), UserId(command.ownerId))
 
-        store.save(classifiedAd)
+        repository.insert(classifiedAd)
+        unitOfWork.commit()
     }
 
     private fun handleUpdate(classifiedAdId: UUID, operation: (ClassifiedAd) -> Unit) {
-        val classifiedAd = store.load<ClassifiedAd>(classifiedAdId.toString())
+        val classifiedAd = repository.findById(ClassifiedAdId(classifiedAdId))
             ?: throw IllegalArgumentException("Entity with id $classifiedAdId cannot be found")
 
         operation(classifiedAd)
 
-        store.save(classifiedAd)
+        repository.update(classifiedAd)
+        unitOfWork.commit()
     }
 }

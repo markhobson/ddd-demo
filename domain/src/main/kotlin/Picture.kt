@@ -1,6 +1,7 @@
 package marketplace.domain
 
 import marketplace.framework.Entity
+import marketplace.framework.Ids
 import java.lang.IllegalArgumentException
 import java.net.URI
 import java.util.UUID
@@ -19,12 +20,12 @@ class Picture(applier: (Any) -> Unit) : Entity<PictureId>(PictureId(), applier) 
         when (event) {
             is Events.PictureAddedToAClassifiedAd -> {
                 id = PictureId(event.pictureId)
-                size = PictureSize.internal(event.height, event.width)
+                size = PictureSize.deserialize(event.height, event.width)
                 location = URI.create(event.url)
                 order = event.order
             }
             is Events.ClassifiedAdPictureResized -> {
-                size = PictureSize.internal(event.height, event.width)
+                size = PictureSize.deserialize(event.height, event.width)
             }
         }
     }
@@ -39,10 +40,10 @@ class Picture(applier: (Any) -> Unit) : Entity<PictureId>(PictureId(), applier) 
 }
 
 data class PictureId(val value: UUID) {
-    constructor() : this(UUID.randomUUID())
+    constructor() : this(Ids.ZERO)
 }
 
-data class PictureSize internal constructor(val width: Int, val height: Int, val internal: Unit) {
+data class PictureSize private constructor(val width: Int, val height: Int, val primary: Unit) {
     constructor(width: Int, height: Int) : this(width, height, Unit) {
         if (width <= 0) {
             throw IllegalArgumentException("Picture width must be a positive number")
@@ -54,7 +55,7 @@ data class PictureSize internal constructor(val width: Int, val height: Int, val
     }
 
     companion object {
-        fun internal(width: Int, height: Int): PictureSize =
+        fun deserialize(width: Int, height: Int): PictureSize =
             PictureSize(width, height, Unit)
     }
 }

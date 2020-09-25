@@ -1,13 +1,12 @@
 package marketplace.domain
 
 import marketplace.framework.AggregateRoot
-import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 import java.net.URI
 import java.util.UUID
 
-class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<ClassifiedAdId>(id) {
-    var ownerId = ownerId
+class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<ClassifiedAdId>(ClassifiedAdId()) {
+    var ownerId: UserId = UserId()
         private set
 
     var title: ClassifiedAdTitle? = null
@@ -84,7 +83,7 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
                 text = ClassifiedAdText(event.adText)
             }
             is Events.ClassifiedAdPriceUpdated -> {
-                price = Price(event.price, event.currencyCode)
+                price = Price.deserialize(event.price, event.currencyCode)
             }
             is Events.ClassifiedAdSentForReview -> {
                 state = ClassifiedAdState.PENDING_REVIEW
@@ -116,6 +115,25 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
         if (!valid) {
             throw InvalidEntityStateException(this, "Post-checks failed in state $state")
         }
+    }
+
+    companion object {
+        fun deserialize(
+            id: ClassifiedAdId,
+            ownerId: UserId,
+            title: ClassifiedAdTitle?,
+            text: ClassifiedAdText?,
+            price: Price?,
+            state: ClassifiedAdState,
+            approvedBy: UserId?
+        ): ClassifiedAd =
+            ClassifiedAd(id, ownerId).also {
+                it.title = title
+                it.text = text
+                it.price = price
+                it.state = state
+                it.approvedBy = approvedBy
+            }
     }
 
     enum class ClassifiedAdState {
