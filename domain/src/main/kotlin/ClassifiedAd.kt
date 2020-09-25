@@ -24,7 +24,9 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
     var approvedBy: UserId? = null
         private set
 
-    private val pictures: MutableList<Picture> = mutableListOf()
+    private val mutablePictures: MutableList<Picture> = mutableListOf()
+
+    val pictures: List<Picture> = mutablePictures
 
     init {
         apply(Events.ClassifiedAdCreated(id.value, ownerId.value))
@@ -53,7 +55,7 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
             url = pictureUri.toString(),
             height = size.height,
             width = size.width,
-            order = pictures.maxOf { picture -> picture.order } + 1
+            order = (pictures.maxOfOrNull { picture -> picture.order } ?: 0) + 1
         ))
     }
 
@@ -91,7 +93,7 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
             is Events.PictureAddedToAClassifiedAd -> {
                 val newPicture = Picture(::apply)
                 applyToEntity(newPicture, event)
-                pictures.add(newPicture)
+                mutablePictures.add(newPicture)
             }
         }
     }
@@ -125,7 +127,8 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
             text: ClassifiedAdText?,
             price: Price?,
             state: ClassifiedAdState,
-            approvedBy: UserId?
+            approvedBy: UserId?,
+            pictures: List<Picture>
         ): ClassifiedAd =
             ClassifiedAd(id, ownerId).also {
                 it.title = title
@@ -133,6 +136,8 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
                 it.price = price
                 it.state = state
                 it.approvedBy = approvedBy
+                it.mutablePictures.clear()
+                it.mutablePictures.addAll(pictures)
             }
     }
 

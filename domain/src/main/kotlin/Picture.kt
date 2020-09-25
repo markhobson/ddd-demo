@@ -7,7 +7,7 @@ import java.net.URI
 import java.util.UUID
 
 class Picture(applier: (Any) -> Unit) : Entity<PictureId>(PictureId(), applier) {
-    var size: PictureSize = PictureSize(0, 0)
+    var size: PictureSize = PictureSize.deserialize(0, 0)
         private set
 
     var location: URI = URI.create("http://localhost")
@@ -36,6 +36,21 @@ class Picture(applier: (Any) -> Unit) : Entity<PictureId>(PictureId(), applier) 
             height = newSize.height,
             width = newSize.width
         ))
+    }
+
+    companion object {
+        fun deserialize(
+            id: PictureId,
+            size: PictureSize,
+            location: URI,
+            order: Int
+        ) =
+            Picture { Unit }.also {
+                it.id = id
+                it.size = size
+                it.location = location
+                it.order = order
+            }
     }
 }
 

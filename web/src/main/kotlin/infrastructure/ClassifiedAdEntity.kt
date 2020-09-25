@@ -8,6 +8,7 @@ import marketplace.domain.ClassifiedAdTitle
 import marketplace.domain.Price
 import marketplace.domain.UserId
 import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.MappedCollection
 import org.springframework.data.relational.core.mapping.Table
 import java.math.BigDecimal
 import java.util.UUID
@@ -22,7 +23,9 @@ data class ClassifiedAdEntity(
     private val amount: BigDecimal?,
     private val currencyCode: String?,
     private val state: ClassifiedAdState,
-    private val approvedBy: UUID?
+    private val approvedBy: UUID?,
+    @MappedCollection(idColumn = "CLASSIFIED_AD_ID")
+    private val pictures: Set<PictureEntity>
 ) {
     private constructor(entity: ClassifiedAd) : this(
         id = entity.id.value,
@@ -32,18 +35,20 @@ data class ClassifiedAdEntity(
         amount = entity.price?.let { it.money.amount },
         currencyCode = entity.price?.let { it.money.currency.currencyCode },
         state = entity.state,
-        approvedBy = entity.approvedBy?.value
+        approvedBy = entity.approvedBy?.value,
+        pictures = entity.pictures.map(PictureEntity::fromDomain).toSet()
     )
 
     fun toDomain(): ClassifiedAd =
         ClassifiedAd.deserialize(
             id = ClassifiedAdId(id),
             ownerId = UserId(ownerId),
-            title = title?.let { ClassifiedAdTitle.fromString(it) },
-            text = text?.let { ClassifiedAdText.fromString(it) },
+            title = title?.let(ClassifiedAdTitle::fromString),
+            text = text?.let(ClassifiedAdText::fromString),
             price = if (amount != null && currencyCode != null) Price.deserialize(amount, currencyCode) else null,
             state = state,
-            approvedBy = approvedBy?.let { UserId(it) }
+            approvedBy = approvedBy?.let(::UserId),
+            pictures = pictures.map(PictureEntity::toDomain)
         )
 
     companion object {
