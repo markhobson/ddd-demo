@@ -2,7 +2,7 @@ package marketplace.web.infrastructure
 
 import marketplace.domain.ContentModeration
 import org.springframework.boot.web.client.RestTemplateBuilder
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import org.springframework.web.util.UriComponentsBuilder
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder
  *
  * See: [http://www.purgomalum.com]
  */
-@Component
+@Service
 class PurgomalumClient(restTemplateBuilder: RestTemplateBuilder) : ContentModeration {
     private val restTemplate = restTemplateBuilder.build()
 

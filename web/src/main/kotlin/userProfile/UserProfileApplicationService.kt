@@ -9,11 +9,11 @@ import marketplace.domain.userProfile.UserProfileRepository
 import marketplace.framework.ApplicationService
 import marketplace.framework.UnitOfWork
 import marketplace.web.userProfile.Contracts.V1
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import java.net.URI
 import java.util.UUID
 
-@Component
+@Service
 class UserProfileApplicationService(
     private val repository: UserProfileRepository,
     private val unitOfWork: UnitOfWork,

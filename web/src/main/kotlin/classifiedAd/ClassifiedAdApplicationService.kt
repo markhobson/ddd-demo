@@ -11,10 +11,10 @@ import marketplace.domain.classifiedAd.Price
 import marketplace.framework.ApplicationService
 import marketplace.framework.UnitOfWork
 import marketplace.web.classifiedAd.Contracts.V1
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import java.util.UUID
 
-@Component
+@Service
 class ClassifiedAdApplicationService(
     private val repository: ClassifiedAdRepository,
     private val unitOfWork: UnitOfWork,
