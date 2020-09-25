@@ -1,8 +1,8 @@
 package marketplace.web.infrastructure
 
-import marketplace.domain.ClassifiedAd
-import marketplace.domain.ClassifiedAdId
-import marketplace.domain.ClassifiedAdRepository
+import marketplace.domain.classifiedAd.ClassifiedAd
+import marketplace.domain.classifiedAd.ClassifiedAdId
+import marketplace.domain.classifiedAd.ClassifiedAdRepository
 import org.springframework.stereotype.Repository
 
 @Repository

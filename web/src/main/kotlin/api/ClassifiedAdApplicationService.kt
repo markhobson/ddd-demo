@@ -1,12 +1,12 @@
 package marketplace.web.api
 
-import marketplace.domain.ClassifiedAd
-import marketplace.domain.ClassifiedAdId
-import marketplace.domain.ClassifiedAdRepository
-import marketplace.domain.ClassifiedAdText
-import marketplace.domain.ClassifiedAdTitle
+import marketplace.domain.classifiedAd.ClassifiedAd
+import marketplace.domain.classifiedAd.ClassifiedAdId
+import marketplace.domain.classifiedAd.ClassifiedAdRepository
+import marketplace.domain.classifiedAd.ClassifiedAdText
+import marketplace.domain.classifiedAd.ClassifiedAdTitle
 import marketplace.domain.CurrencyLookup
-import marketplace.domain.Price
+import marketplace.domain.classifiedAd.Price
 import marketplace.domain.UserId
 import marketplace.framework.ApplicationService
 import marketplace.framework.UnitOfWork

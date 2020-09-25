@@ -1,6 +1,9 @@
-package marketplace.domain
+package marketplace.domain.classifiedAd
 
-import marketplace.domain.ClassifiedAd.ClassifiedAdState
+import marketplace.domain.FakeCurrencyLookup
+import marketplace.domain.InvalidEntityStateException
+import marketplace.domain.UserId
+import marketplace.domain.classifiedAd.ClassifiedAd.ClassifiedAdState
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test

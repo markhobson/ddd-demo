@@ -1,4 +1,4 @@
-package marketplace.domain
+package marketplace.domain.classifiedAd
 
 import marketplace.framework.Entity
 import marketplace.framework.Ids

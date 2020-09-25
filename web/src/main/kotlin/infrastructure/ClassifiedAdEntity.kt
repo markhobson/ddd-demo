@@ -1,11 +1,11 @@
 package marketplace.web.infrastructure
 
-import marketplace.domain.ClassifiedAd
-import marketplace.domain.ClassifiedAd.ClassifiedAdState
-import marketplace.domain.ClassifiedAdId
-import marketplace.domain.ClassifiedAdText
-import marketplace.domain.ClassifiedAdTitle
-import marketplace.domain.Price
+import marketplace.domain.classifiedAd.ClassifiedAd
+import marketplace.domain.classifiedAd.ClassifiedAd.ClassifiedAdState
+import marketplace.domain.classifiedAd.ClassifiedAdId
+import marketplace.domain.classifiedAd.ClassifiedAdText
+import marketplace.domain.classifiedAd.ClassifiedAdTitle
+import marketplace.domain.classifiedAd.Price
 import marketplace.domain.UserId
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.MappedCollection

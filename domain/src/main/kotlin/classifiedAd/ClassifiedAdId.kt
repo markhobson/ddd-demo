@@ -1,4 +1,4 @@
-package marketplace.domain
+package marketplace.domain.classifiedAd
 
 import marketplace.framework.Ids
 import java.util.UUID

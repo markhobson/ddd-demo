@@ -1,4 +1,4 @@
-package marketplace.domain
+package marketplace.domain.classifiedAd
 
 import java.math.BigDecimal
 import java.util.UUID

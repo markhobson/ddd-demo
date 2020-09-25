@@ -1,5 +1,7 @@
-package marketplace.domain
+package marketplace.domain.classifiedAd
 
+import marketplace.domain.InvalidEntityStateException
+import marketplace.domain.UserId
 import marketplace.framework.AggregateRoot
 import java.math.BigDecimal
 import java.net.URI

@@ -1,4 +1,4 @@
-package marketplace.domain
+package marketplace.domain.classifiedAd
 
 interface ClassifiedAdRepository {
     fun findById(id: ClassifiedAdId): ClassifiedAd?

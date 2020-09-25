@@ -1,8 +1,8 @@
 package marketplace.web.infrastructure
 
-import marketplace.domain.Picture
-import marketplace.domain.PictureId
-import marketplace.domain.PictureSize
+import marketplace.domain.classifiedAd.Picture
+import marketplace.domain.classifiedAd.PictureId
+import marketplace.domain.classifiedAd.PictureSize
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import java.net.URI

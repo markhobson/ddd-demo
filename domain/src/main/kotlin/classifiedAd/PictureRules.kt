@@ -1,4 +1,4 @@
-package marketplace.domain
+package marketplace.domain.classifiedAd
 
 fun Picture?.hasCorrectSize(): Boolean =
     this != null
