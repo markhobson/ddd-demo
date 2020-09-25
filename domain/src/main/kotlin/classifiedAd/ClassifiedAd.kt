@@ -1,6 +1,6 @@
 package marketplace.domain.classifiedAd
 
-import marketplace.domain.InvalidEntityStateException
+import marketplace.domain.DomainExceptions
 import marketplace.domain.UserId
 import marketplace.framework.AggregateRoot
 import java.math.BigDecimal
@@ -117,7 +117,7 @@ class ClassifiedAd(id: ClassifiedAdId, ownerId: UserId) : AggregateRoot<Classifi
         }
 
         if (!valid) {
-            throw InvalidEntityStateException(this, "Post-checks failed in state $state")
+            throw DomainExceptions.InvalidEntityStateException(this, "Post-checks failed in state $state")
         }
     }
 

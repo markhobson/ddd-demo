@@ -1,7 +1,7 @@
 package marketplace.domain.classifiedAd
 
+import marketplace.domain.DomainExceptions
 import marketplace.domain.FakeCurrencyLookup
-import marketplace.domain.InvalidEntityStateException
 import marketplace.domain.UserId
 import marketplace.domain.classifiedAd.ClassifiedAd.ClassifiedAdState
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -30,7 +30,7 @@ class ClassifiedAdPublishSpec {
         classifiedAd.updateText(ClassifiedAdText.fromString("Please buy my stuff"))
         classifiedAd.updatePrice(Price.fromDouble(100.10, "EUR", FakeCurrencyLookup()))
 
-        assertThrows(InvalidEntityStateException::class.java) {
+        assertThrows(DomainExceptions.InvalidEntityStateException::class.java) {
             classifiedAd.requestToPublish()
         }
     }
@@ -40,7 +40,7 @@ class ClassifiedAdPublishSpec {
         classifiedAd.setTitle(ClassifiedAdTitle.fromString("Test ad"))
         classifiedAd.updatePrice(Price.fromDouble(100.10, "EUR", FakeCurrencyLookup()))
 
-        assertThrows(InvalidEntityStateException::class.java) {
+        assertThrows(DomainExceptions.InvalidEntityStateException::class.java) {
             classifiedAd.requestToPublish()
         }
     }
@@ -50,7 +50,7 @@ class ClassifiedAdPublishSpec {
         classifiedAd.setTitle(ClassifiedAdTitle.fromString("Test ad"))
         classifiedAd.updateText(ClassifiedAdText.fromString("Please buy my stuff"))
 
-        assertThrows(InvalidEntityStateException::class.java) {
+        assertThrows(DomainExceptions.InvalidEntityStateException::class.java) {
             classifiedAd.requestToPublish()
         }
     }
@@ -61,7 +61,7 @@ class ClassifiedAdPublishSpec {
         classifiedAd.updateText(ClassifiedAdText.fromString("Please buy my stuff"))
         classifiedAd.updatePrice(Price.fromDouble(0.0, "EUR", FakeCurrencyLookup()))
 
-        assertThrows(InvalidEntityStateException::class.java) {
+        assertThrows(DomainExceptions.InvalidEntityStateException::class.java) {
             classifiedAd.requestToPublish()
         }
     }
