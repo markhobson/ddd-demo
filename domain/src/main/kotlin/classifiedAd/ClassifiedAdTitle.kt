@@ -1,7 +1,5 @@
 package marketplace.domain.classifiedAd
 
-import java.lang.IllegalArgumentException
-
 data class ClassifiedAdTitle internal constructor(val value: String) {
     companion object {
         fun fromString(title: String): ClassifiedAdTitle {

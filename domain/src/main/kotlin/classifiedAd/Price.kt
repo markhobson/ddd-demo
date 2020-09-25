@@ -3,7 +3,6 @@ package marketplace.domain.classifiedAd
 import marketplace.domain.CurrencyDetails
 import marketplace.domain.CurrencyLookup
 import marketplace.domain.Money
-import java.lang.IllegalArgumentException
 import java.math.BigDecimal
 
 // Uses composition instead of inheritance since Kotlin data classes are closed

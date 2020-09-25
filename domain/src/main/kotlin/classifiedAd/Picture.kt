@@ -2,7 +2,6 @@ package marketplace.domain.classifiedAd
 
 import marketplace.framework.Entity
 import marketplace.framework.Ids
-import java.lang.IllegalArgumentException
 import java.net.URI
 import java.util.UUID
 

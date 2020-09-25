@@ -1,19 +1,17 @@
 package marketplace.web.classifiedAd
 
+import marketplace.domain.CurrencyLookup
+import marketplace.domain.UserId
 import marketplace.domain.classifiedAd.ClassifiedAd
 import marketplace.domain.classifiedAd.ClassifiedAdId
 import marketplace.domain.classifiedAd.ClassifiedAdRepository
 import marketplace.domain.classifiedAd.ClassifiedAdText
 import marketplace.domain.classifiedAd.ClassifiedAdTitle
-import marketplace.domain.CurrencyLookup
 import marketplace.domain.classifiedAd.Price
-import marketplace.domain.UserId
 import marketplace.framework.ApplicationService
 import marketplace.framework.UnitOfWork
 import marketplace.web.classifiedAd.Contracts.V1
 import org.springframework.stereotype.Component
-import java.lang.IllegalArgumentException
-import java.lang.IllegalStateException
 import java.util.UUID
 
 @Component
