@@ -3,7 +3,7 @@ package marketplace.domain.classifiedAd
 import java.math.BigDecimal
 import java.util.UUID
 
-class Events {
+object Events {
     data class ClassifiedAdCreated(val id: UUID, val ownerId: UUID)
 
     data class ClassifiedAdTitleChanged(val id: UUID, val title: String)
