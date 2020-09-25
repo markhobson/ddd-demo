@@ -1,8 +1,8 @@
-package marketplace.web.contracts
+package marketplace.web.classifiedAd
 
 import java.util.UUID
 
-class ClassifiedAds {
+class Contracts {
     class V1 {
         data class Create(val id: UUID, val ownerId: UUID)
 

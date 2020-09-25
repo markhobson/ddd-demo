@@ -1,5 +1,6 @@
-package marketplace.web.infrastructure
+package marketplace.web.classifiedAd
 
+import marketplace.web.infrastructure.InsertUpdateJdbcRepository
 import org.springframework.data.repository.CrudRepository
 import java.util.UUID
 

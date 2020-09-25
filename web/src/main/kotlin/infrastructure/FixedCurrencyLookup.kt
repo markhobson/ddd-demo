@@ -1,4 +1,4 @@
-package marketplace.web
+package marketplace.web.infrastructure
 
 import marketplace.domain.CurrencyDetails
 import marketplace.domain.CurrencyLookup

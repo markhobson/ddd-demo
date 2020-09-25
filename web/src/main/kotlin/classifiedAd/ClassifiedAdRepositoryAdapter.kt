@@ -1,4 +1,4 @@
-package marketplace.web.infrastructure
+package marketplace.web.classifiedAd
 
 import marketplace.domain.classifiedAd.ClassifiedAd
 import marketplace.domain.classifiedAd.ClassifiedAdId

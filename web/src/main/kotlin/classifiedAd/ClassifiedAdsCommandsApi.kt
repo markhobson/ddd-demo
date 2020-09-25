@@ -1,6 +1,6 @@
-package marketplace.web.api
+package marketplace.web.classifiedAd
 
-import marketplace.web.contracts.ClassifiedAds.*
+import marketplace.web.classifiedAd.Contracts.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
